@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.jandira.bmi.screens.ResultScreen
 import br.senai.sp.jandira.bmi.screens.TelaInicial
 import br.senai.sp.jandira.bmi.screens.UserScreen
 import br.senai.sp.jandira.bmi.ui.theme.BMITheme
@@ -30,7 +31,12 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = "user_data"
                         ){
-                            UserScreen()
+                            UserScreen(navController)
+                        }
+                        composable(
+                            route = "result_screen"
+                        ){
+                            ResultScreen(navController)
                         }
                     }
                 }

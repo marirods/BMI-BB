@@ -31,11 +31,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import br.senai.sp.jandira.bmi.R
 
 
 @Composable
-fun ResultScreen(modifier: Modifier = Modifier) {
+fun ResultScreen(navController: NavHostController?) {
 
 
     Box(
@@ -220,7 +221,9 @@ fun ResultScreen(modifier: Modifier = Modifier) {
                         }
                         HorizontalDivider()
                         Button(
-                            onClick = {},
+                            onClick = {
+                                navController?.navigate("user_data")
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(
@@ -248,6 +251,6 @@ fun ResultScreen(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true)
 @Composable
 private fun ResultScreenPreview() {
-    ResultScreen()
+    ResultScreen(null)
 
 }
