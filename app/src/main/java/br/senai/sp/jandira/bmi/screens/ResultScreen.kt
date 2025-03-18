@@ -37,6 +37,7 @@ import br.senai.sp.jandira.bmi.R
 @Composable
 fun ResultScreen(modifier: Modifier = Modifier) {
 
+
     Box(
         modifier = Modifier
             .fillMaxSize()
