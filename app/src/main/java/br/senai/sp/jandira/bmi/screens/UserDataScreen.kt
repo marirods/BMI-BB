@@ -190,7 +190,7 @@ fun UserScreen(modifier: Modifier = Modifier) {
                                 .padding(horizontal = 12.dp,
                                     vertical = 8.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(color = 0xFFFF5722)
+                                    containerColor = Color(color = 0xFFAB3636)
                                     )
                         ) {
                             Text(
@@ -311,7 +311,7 @@ fun UserScreen(modifier: Modifier = Modifier) {
                         .padding(top = 40.dp)
                         .fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(color = 0xFFFF5722)
+                        containerColor = Color(color = 0xFFAB3636)
                     )
                 ) {
                     Text(

@@ -129,14 +129,14 @@ fun TelaInicial(navController: NavHostController?) {
                                 Icon(
                                     imageVector = Icons.Default.Email,
                                     contentDescription = "",
-                                    tint = Color(color = 0xFFFF5722)
+                                    tint = Color(color = 0xFFAB3636)
                                 )
                             },
                             leadingIcon = {
                                 Icon(
                                     imageVector = Icons.Default.AccessAlarms,
                                     contentDescription = "",
-                                    tint = Color(color = 0xFFFF5722)
+                                    tint = Color(color = 0xFFAB3636)
                                 )
                             },
                             keyboardOptions = KeyboardOptions(
@@ -163,7 +163,7 @@ fun TelaInicial(navController: NavHostController?) {
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(color = 0xFFFF5722)
+                            containerColor = Color(color = 0xFFAB3636)
                         )
                         ){
                         Text(
