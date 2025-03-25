@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.bmi.screens
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -45,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.bmi.R
+import kotlin.coroutines.coroutineContext
 
 @Composable
 fun UserScreen(navController: NavHostController?) {
@@ -60,6 +63,19 @@ fun UserScreen(navController: NavHostController?) {
     var heightState = remember {
         mutableStateOf("")
     }
+
+    //Abrir o arquivo usuário.xml
+    // para recuperar o nome que o usuário digitou
+    // na tela anterior
+
+    val context = LocalContext.current
+    val sharedUserFile = context
+        .getSharedPreferences(
+            "usuario", Context.MODE_PRIVATE
+        )
+    val userName = sharedUserFile.getString(
+        "user_name", "Name not found!"
+    )
 
 
 
@@ -84,7 +100,7 @@ fun UserScreen(navController: NavHostController?) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = stringResource(R.string.name),
+                text = stringResource(R.string.name) + " $userName !",
                 fontSize = 26.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
@@ -147,8 +163,10 @@ fun UserScreen(navController: NavHostController?) {
                             onClick = {},
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 12.dp,
-                                    vertical = 8.dp),
+                                .padding(
+                                    horizontal = 12.dp,
+                                    vertical = 8.dp
+                                ),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Gray
                             )
@@ -188,11 +206,13 @@ fun UserScreen(navController: NavHostController?) {
                             onClick = {},
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 12.dp,
-                                    vertical = 8.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(color = 0xFFAB3636)
-                                    )
+                                .padding(
+                                    horizontal = 12.dp,
+                                    vertical = 8.dp
+                                ),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(color = 0xFFAB3636)
+                            )
                         ) {
                             Text(
                                 text = stringResource(R.string.female)
@@ -200,14 +220,14 @@ fun UserScreen(navController: NavHostController?) {
                         }
                     }
                 }
-                Column (
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
                             horizontal = 16.dp,
                             vertical = 16.dp
                         )
-                ){
+                ) {
                     OutlinedTextField(
                         value = ageState.value,
                         onValueChange = {
@@ -236,7 +256,7 @@ fun UserScreen(navController: NavHostController?) {
                             focusedBorderColor = Color(color = 0xFFFF5722),
                             cursorColor = Color(color = 0xFFFF5722),
                             unfocusedBorderColor = Color(color = 0xFFFF5722)
-                    )
+                        )
                     )
                     OutlinedTextField(
                         value = weightState.value,
@@ -307,7 +327,16 @@ fun UserScreen(navController: NavHostController?) {
                     )
                 }
                 Button(
-                    onClick = {navController?.navigate("result_screen")},
+                    onClick = {
+                        val editor = sharedUserFile.edit()
+                        editor.putInt("user_age", ageState.value.trim().toInt())
+                        editor.putInt("user_weight", weightState.value.trim().toInt())
+                        editor.putInt("user_height", heightState.value.trim().toInt())
+                        editor.apply()
+
+                        navController?.navigate("result_screen")
+                    },
+
                     modifier = Modifier
                         .padding(top = 40.dp)
                         .fillMaxWidth(),

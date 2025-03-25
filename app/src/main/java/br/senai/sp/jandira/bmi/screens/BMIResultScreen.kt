@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.bmi.screens
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,17 +27,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.bmi.R
+import br.senai.sp.jandira.bmi.model.BmiStatus
 
 
 @Composable
-fun ResultScreen(navController: NavHostController?) {
+fun ResultScreen(navController: NavHostController?){
+
+    val context= LocalContext.current
+
+    val sharedUserFile = context
+        .getSharedPreferences("usuario", Context.MODE_PRIVATE)
+
+    val age = sharedUserFile.getInt("user_age", 0)
+    var height: Double = sharedUserFile.getInt("user_height", 0).toDouble()
+    val weight = sharedUserFile.getInt("user_weight", 0)
+
+    height /= 100.0
+
+
 
 
     Box(
@@ -64,7 +81,7 @@ fun ResultScreen(navController: NavHostController?) {
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 modifier = Modifier
-                    .padding(start = 20.dp)
+                    .padding(start = 4.dp)
                     .weight(1f),
             )
         }
@@ -164,7 +181,7 @@ fun ResultScreen(navController: NavHostController?) {
                                         fontWeight = FontWeight.Bold,
                                     )
                                     Text(
-                                        text = stringResource(R.string.number_idade),
+                                        text = age.toString(),
                                         color = Color.White,
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.Bold,
@@ -184,7 +201,7 @@ fun ResultScreen(navController: NavHostController?) {
                                         fontWeight = FontWeight.Bold,
                                     )
                                     Text(
-                                        text = stringResource(R.string.number_peso),
+                                        text = "$weight" + " Kg",
                                         color = Color.White,
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.Bold,
@@ -204,7 +221,11 @@ fun ResultScreen(navController: NavHostController?) {
                                         fontWeight = FontWeight.Bold,
                                     )
                                     Text(
-                                        text = stringResource(R.string.number_altura),
+                                        text = String.format(
+                                            java.util.Locale.getDefault(),
+                                            format = "%.2f",
+                                            height
+                                        ),
                                         color = Color.White,
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.Bold,
@@ -221,9 +242,7 @@ fun ResultScreen(navController: NavHostController?) {
                         }
                         HorizontalDivider()
                         Button(
-                            onClick = {
-                                navController?.navigate("user_data")
-                            },
+                            onClick = {},
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(
